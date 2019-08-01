@@ -1,6 +1,9 @@
 package com.example.demo;
 
+import java.sql.PreparedStatement;
 import java.util.List;
+
+import javax.validation.Valid;
 
 // import java.util.concurrent.atomic.AtomicLong;
 
@@ -8,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 // import org.springframework.web.bind.annotation.PathVariable;
@@ -17,20 +22,51 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class PetController {
+@RequestMapping("/api/pet")
+public class PetController<NewPet, AddPet> {
 
     @Autowired
     JdbcTemplate jdbcTemplate;
+    
 
-    @RequestMapping( value = "/api/pet", method = RequestMethod.GET )
+    @GetMapping
     public List<Pet> list(){
-        return jdbcTemplate.query( "SELECT * FROM pets", new PetRowMapper());
+		return jdbcTemplate.query( "SELECT * FROM pets", new PetRowMapper());
     }
 
-    @PostMapping( value = "/api/pet", method = RequestMethod.POST )
-    public ResponseEntity <Pet> create(@RequestBody Pet pet ){
-        jdbcTemplate.query( "INSERT INTO pets (p_name, p_breed, p_color) VALUES (?, ?, ?)", new Object[] <Pet>);
-        return new ResponseEntity<Pet>(HttpStatus.OK);
+
+    // @PostMapping("/api/pet")
+    // public ResponseEntity <Pet> create(@RequestBody Pet pet ){
+    //     // String sqlText = "INSERT INTO pets (p_name, p_breed, p_color) VALUES (?, ?, ?)";
+    //     PreparedStatement st = conn.prepareStatement("INSERT INTO pets (p_name, p_breed, p_color) VALUES (?, ?, ?)");
+    //     st.setName(1, pet.name);
+    //     st.setBreed(2, pet.breed);
+    //     st.setColor(3, pet.color);
+    //     st.executeUpdate();
+    //     st.close();
+    //     return new ResponseEntity<Pet>(HttpStatus.OK);
+    // }
+
+
+    // @PostMapping
+    // public ResponseEntity <Void> addPet(@RequestBody Pet pet){
+    //     try {
+    //         petHotelService.addPet(pet);
+    //         return ResponseEntity.status(HttpStatus.OK).build();
+    //     } catch (Exception e) {
+    //         e.printStackTrace();
+    //         return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    //     }
+    // }
+
+    @PostMapping
+    public int create(@RequestBody Pet pet) {
+        // String sql = "INSERT INTO pets (p_name, p_breed, p_color) VALUES (?, ?, ?)";
+        // Object[] args = new Object[] {pet.getName(), pet.getBreed(), pet.getColor()};
+        // return jdbcTemplate.update(String sql, Object[] args);
+        System.out.println(pet);
+
+        return jdbcTemplate.update("INSERT INTO pets (p_name, p_breed, p_color) VALUES (?, ?, ?)", new Object[] {pet.getName(), pet.getBreed(), pet.getColor()});
     }
 
     // @RequestMapping( value = "/api/plants/{id}", method = RequestMethod.GET )
