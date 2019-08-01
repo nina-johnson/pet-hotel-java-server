@@ -4,6 +4,7 @@ public class Owner {
 
     private long id;
     private String o_name;
+	public Owner getName;
 
     public Owner(){};
 
