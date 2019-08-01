@@ -10,7 +10,7 @@ public class OwnerRowMapper implements RowMapper<Owner>
     public Owner mapRow(ResultSet rs, int rowNum ) throws SQLException {
         Owner owner = new Owner();
         owner.setId(rs.getLong("id"));
-        owner.setName(rs.getString("o_name"));
+        owner.setName(rs.getString("Owner_name"));
         return owner;
     }
 }

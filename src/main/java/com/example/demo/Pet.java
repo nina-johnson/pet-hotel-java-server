@@ -8,6 +8,7 @@ public class Pet {
     private String p_breed;
     private String p_color;
     private boolean p_checkIn;
+    private String p_owner;
 
     public Pet(){};
 
@@ -17,6 +18,7 @@ public class Pet {
         this.p_breed = p_breed;
         this.p_color = p_color;
         this.p_checkIn = p_checkIn;
+        this.p_owner = p_owner;
     }
 
     // Methods to get data
@@ -40,6 +42,11 @@ public class Pet {
         return p_checkIn;
     }
 
+    public String getOwner() {
+        return p_owner;
+    }
+
+
     // Methods to set data
     public void setId( long id ) {
         this.id = id;
@@ -59,5 +66,9 @@ public class Pet {
 
     public void setCheckIn( boolean p_checkIn ) {
         this.p_checkIn = p_checkIn;
+    }
+
+    public void setOwner( String p_owner ) {
+        this.p_owner = p_owner;
     }
 }

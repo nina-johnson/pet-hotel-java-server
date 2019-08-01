@@ -24,7 +24,7 @@ public class PetController<NewPet, AddPet> {
 
     @GetMapping
     public List<Pet> list(){
-		return jdbcTemplate.query( "SELECT * FROM pets", new PetRowMapper());
+		return jdbcTemplate.query( "SELECT * FROM pets JOIN owners ON owners.id = pets.p_owner_id", new PetRowMapper());
     }
 
 
